@@ -2,14 +2,6 @@ use text_io::read;
 
 fn numerology() {
     println!("Welcome to the Word to Numerology! \n Please enter a word:");
-    /* let letters = [
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-        'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    ];
-    let numbers = [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
-        26,
-    ];*/
 
     //We get the user input
     let user_string: String = read!();
@@ -29,10 +21,25 @@ fn numerology() {
 
     //We print the sum of the numbers in num_vec
     let _sum: u32 = num_vec.iter().sum();
-    println!("{}", _sum);
+    println!(
+        "The sum of the position of the letters of your word is:{}",
+        _sum
+    );
 }
 
-fn main() {}
+fn main() {
+    println!(
+        "Welcome to the Numerology program! \n Input either 1, for the Ceasar's Cypher and 2 for the Char - Int converter"
+    );
+
+    let option: String = read!();
+
+    match option.as_str() {
+        "1" => ceasar_cyper(),
+        "2" => numerology(),
+        _ => println!("Invalid option"),
+    }
+}
 
 fn ceasar_cyper() {
     println!("Welcome to Ceasar's Cypher! \n Input the word / sentence you want to convert? ");
@@ -44,8 +51,19 @@ fn ceasar_cyper() {
     let mut num_vec: Vec<u32> = vec![];
 
     for ch in char_vec.iter().enumerate() {
-        let char_to_int = char_vec[ch.0].to_ascii_uppercase() as u32 + 1 - 'A' as u32;
+        let char_to_int = char_vec[ch.0].to_ascii_uppercase() as u32 + 4 - 'A' as u32;
 
         num_vec.push(char_to_int);
     }
+
+    // Example vector with ASCII values
+
+    let char_vec2: Vec<char> = num_vec
+        .iter()
+        .map(|&num| (num as u8 + 'A' as u8 - 1) as char)
+        .collect();
+
+    let cipher = char_vec2.iter().collect::<String>();
+
+    println!("The word ciphered is: {}", cipher);
 }
